@@ -1,0 +1,176 @@
+
+<div class="card card-custom gutter-b">
+    <ng-container  >
+      <div class="progress progress-modal">
+        <div
+          class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+          role="progressbar"
+          style="width: 100%"
+          aria-valuenow="100"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
+      </div>
+    </ng-container>
+  
+    <div class="card-header">
+      <div class="card-title">
+        <h3 class="card-label">
+        Add ViewPermit
+         
+        </h3>
+  
+      </div>
+   
+      <div class="card-toolbar">
+        <a type="button" class="btn   btn-primary font-weight-bold" routerLink="/superadmin/products">
+          <i class="fa fa-arrow-left"></i>Back
+        </a>
+        <button class="btn btn-primary font-weight-bold   ml-2"  >
+          <i class="fa fa-redo"></i>Reset
+        </button>
+      </div>
+    </div>
+    
+     
+  
+    <div class="card-body">
+       
+      <ng-container  >
+        <div class="mt-5" >
+            <form name="viewtransForm" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+
+            <div class="form-group row">
+              <div class="col-lg-6">
+                <label>Lot No <span style="color:#ff0000">*</span></label>
+                <select class="form-control" name="lot_no" formControlName="lot_no"  #mySelect
+                (change)='onOptionsSelected(mySelect.value)'>
+                    <option> Please Select</option>
+                    <option *ngFor="let product of productsService.items$ | async; let i = index" [value]="product.lot_no">
+                      {{product.lot_no }}</option>
+                  </select>
+              </div>
+  
+              <div class="col-lg-6">
+                <label>Permit Type  </label>
+                <select class="form-control" name="permit_type" formControlName="permit_type"
+                            #myType (change)="onCheckboxChange(myType)" >
+                                <option> Please Select</option>
+                                <option *ngFor="let ptype of tableData;  let i = index" [value]="ptype.name" data-amount="11" data-expires="11">
+                                  {{ptype.name }}
+                                
+                                </option>
+                                
+                              </select>
+                
+              </div>
+            </div>
+            
+   
+            <div class="form-group row">
+              <div class="col-lg-6">
+                <label>Quantity <span style="color:#ff0000">*</span></label>
+                <input type="number" class="form-control num" min="0" max="10000000" name="quantity"
+                                [(ngModel)]="model.quantity"  #quantity="ngModel" 
+                                (ngModelChange)="amountCalculation($event)" (keydown)="handleKeydown($event)">
+              
+              </div>
+  
+              <div class="col-lg-6">
+                <label>	Permit Expires <span style="color:#ff0000">*</span></label>
+                <input *ngIf="totalAmount === 0" type="text" class="form-control" disabled>
+                <input *ngIf="totalAmount !== 0" [ngModel]="expiryDate | date:'medium':'GMT-5'"
+                    (ngModelChange)="expiryDate=$event" name="expiryDate" type="text" class="form-control form-control-lg form-control-solid"
+                    disabled>
+ 
+              </div>
+            </div>
+  
+           
+            <div class="form-group row">
+                <div class="col-lg-6">
+                  <label>Amount ($) <span style="color:#ff0000">*</span></label>
+                  <input [ngModel]="amount | currency" (ngModelChange)="amount=$event" name="amount"
+                                type="text" class="form-control form-control-lg form-control-solid" disabled>
+                
+                </div>
+    
+                <div class="col-lg-6">
+                  <label>Tax ($)<span style="color:#ff0000">*</span></label>
+                  <input [ngModel]="taxAmount | currency" (ngModelChange)="taxAmount=$event" name="taxAmount"
+                                type="text" class="form-control form-control-lg form-control-solid" disabled>
+   
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <!-- <div class="col-lg-6">
+                  <label>Total ($) <span style="color:#ff0000">*</span></label>
+                  <input [ngModel]="totalAmount | currency" (ngModelChange)="totalAmount=$event"
+                  name="totalAmount" type="text" class="form-control form-control-lg form-control-solid" disabled>
+                
+                </div> -->
+    
+             
+
+                <div class="col-lg-6">
+                  <label>Email <span style="color:#ff0000">*</span></label>
+                  <input class="form-control form-control-lg form-control-solid" type="text" name="email" [(ngModel)]="model.email"
+                  #email="ngModel"   required />
+   
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Phone <span style="color:#ff0000">*</span></label>
+                    <input class="form-control form-control-lg form-control-solid" type="text" name="phone" [(ngModel)]="model.phone"
+                                  #phone="ngModel"  required />
+                  
+                  </div>
+
+              </div>
+
+   
+              <div class="form-group row">
+               
+                
+                <div class="col-lg-6">
+                  <label>Courtesy Card No <span style="color:#ff0000">*</span></label>
+                  <input class="form-control form-control-lg form-control-solid" type="text" name="courtesy_no" [(ngModel)]="model.courtesy_no"
+                  #courtesy_no="ngModel" 
+                  required />
+   
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Courtesy Card Pin <span style="color:#ff0000">*</span></label>
+                    <input class="form-control form-control-lg form-control-solid" type="text" name="courtesy_pin" [(ngModel)]="model.courtesy_pin"
+                    #courtesy_pin="ngModel" 
+                    required />
+                  
+                  </div>
+
+              </div>
+
+  
+          
+
+           
+              <div class="float-right">
+              <a class="btn btn-default font-weight-bold mr-2"
+                routerLink="/superadmin/products"
+                >Cancel</a>
+              
+   
+  
+              <ng-container >
+                <button  class="btn btn-primary">Submit</button>
+              </ng-container>
+            </div>
+          </form>
+        </div>
+      </ng-container>
+   
+    </div>
+  </div>
+   
+  

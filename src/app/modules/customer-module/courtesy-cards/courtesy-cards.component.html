@@ -1,0 +1,80 @@
+<div class="content-area" style="background-color: white;">
+    <div class="row" style="margin-bottom: 2rem;">
+        <div class="col-md-6 col-6 text-left">
+            <h2 class="inner-hd">Card Report</h2>
+        </div>
+        <div class="col-md-6 col-6 text-right">
+            <form>
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <input type="text" class="form-control inline-frm serch-fld" placeholder="Enter Card Number">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-default">SEARCH</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- begin:Table -->
+    <div class="table-responsive angular-bootstrap-table">
+         <table class="table table-head-custom table-vertical-center overflow-hidden">
+            <thead>
+                <th>
+                    CARD NO
+                    <app-sort-icon column="card_no" [activeColumn]="sorting.column"
+                        [activeDirection]="sorting.direction" (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    CARD PIN
+                    <app-sort-icon column="calls" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                        (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>
+                    AVAILABLE CALLS
+                    <app-sort-icon column="calls" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                        (sort)="sort($event)"></app-sort-icon>
+                </th>
+
+                <th>
+                    DEFAULT CALLS
+                    <app-sort-icon column="calls" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+                        (sort)="sort($event)"></app-sort-icon>
+                </th>
+
+                <th>
+                    TYPE
+                    <app-sort-icon column="card_type" [activeColumn]="sorting.column"
+                        [activeDirection]="sorting.direction" (sort)="sort($event)"></app-sort-icon>
+                </th>
+                <th>ACTIONS</th>
+            </thead>
+             <tbody>
+                <tr *ngFor="let courtesycard of customercourtesycardService.items$ | async">
+                    <td>{{ courtesycard.card_no }}</td>
+                    <td>{{ courtesycard.customer_id }}</td>
+                    <td>{{ courtesycard.calls }}</td>
+                    <td> 5 </td>
+                    <td>{{ courtesycard.card_type }}</td>
+                    <td>
+                        <a title="Edit courtesycard" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                            (click)="edit(courtesycard.id)">
+                            <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                                class="svg-icon svg-icon-md svg-icon-primary">
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+
+                <div *ngIf="(customercourtesycardService.items$ | async).length == 0">
+                    <span class="norecord"> No Records Found! </span>
+                </div>
+
+            </tbody>
+        </table>
+    </div>
+    <!-- end: Table -->
+    <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator"
+        [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator>
+</div>
