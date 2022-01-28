@@ -48,7 +48,6 @@ export class ManagePermitsComponent
     this.managepermitService.fetch();
     const sb = this.managepermitService.isLoading$.subscribe(res => (this.isLoading = res));
     this.subscriptions.push(sb);
-    debugger;
     this.grouping = this.managepermitService.grouping;
     this.paginator = this.managepermitService.paginator;
     this.sorting = this.managepermitService.sorting;

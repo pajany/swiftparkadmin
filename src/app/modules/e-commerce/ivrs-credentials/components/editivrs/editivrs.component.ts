@@ -72,7 +72,6 @@ export class EditivrsComponent implements OnInit, OnDestroy {
   }
 
   loadForm() {
-    debugger;
     this.formGroup = this.fb.group({
       lot_no: [this.IvrsPage.lot_no, Validators.compose([Validators.required])],
       name: [this.IvrsPage.name, Validators.compose([Validators.required])],

@@ -57,10 +57,9 @@ export class ManagepagesComponent
     this.filterForm();
     this.searchForm();
     this.managepageService.fetch();
-    console.log("res", this.managepageService.fetch());
+    console.log('res', this.managepageService.fetch());
     const sb = this.managepageService.isLoading$.subscribe(res => (this.isLoading = res));
     this.subscriptions.push(sb);
-    debugger;
     this.grouping = this.managepageService.grouping;
     this.paginator = this.managepageService.paginator;
     this.sorting = this.managepageService.sorting;
